@@ -1,0 +1,81 @@
+﻿create database tienda_arismendy;
+use tienda_arismendy;
+create table usuario(
+	id int not null AUTO_INCREMENT PRIMARY key,
+    usuario_nombre varchar(70),
+    usuario_clave varchar(100),
+    rol enum('administrador','cajero','supervisor'),
+    fecha datetime,
+    id_usuario int
+);
+create table cliente(
+	id int not null AUTO_INCREMENT PRIMARY key,
+    nombre varchar(70),
+    apellido varchar(100),
+    cedula varchar(15),
+    telefono varchar(17),
+    correo varchar(100),
+    fecha datetime,
+    id_usuario int
+);
+create table proveedor(
+	id int not null AUTO_INCREMENT PRIMARY key,
+    nombre varchar(70),
+    apellido varchar(100),
+    cedula varchar(15),
+    telefono varchar(17),
+    correo varchar(100),
+    fecha datetime,
+    id_usuario int
+);
+create table producto(
+	id int not null AUTO_INCREMENT PRIMARY key,
+    nombre varchar(70),
+    fecha datetime,
+    id_usuario int,
+    cantidad_disponible int,
+    precio decimal(20,2)
+);
+create table compra_producto(
+	id int not null AUTO_INCREMENT PRIMARY key,
+    id_proveedor int,
+    id_producto int,
+    fecha datetime,
+    id_usuario int,
+    precio_compra decimal(20,2),
+    cantidad_comprada int,
+    monto_total decimal(20,2)
+);
+create table servicio(
+	id int not null AUTO_INCREMENT PRIMARY key,
+    nombre varchar(70),
+    fecha datetime,
+    id_usuario int,
+    precio decimal(20,2)
+);
+
+create table factura (
+	id int not null AUTO_INCREMENT PRIMARY key,
+    id_cliente int,
+    fecha datetime,
+    id_usuario int,
+    monto decimal(20,2),
+    itbis decimal(20,2),
+    monto_apagar decimal(20,2),
+    nota text,
+    tipo_factura ENUM('reparacion','venta') default 'venta',
+    estado ENUM('pendiente_reparacion','reparado'),
+    fecha_entrega datetime
+);
+create table factura_detalle (
+	id int not null AUTO_INCREMENT PRIMARY key,
+    id_factura int,
+    fecha datetime,
+    id_usuario int,
+    precio decimal(20,2),
+    cantidad int,
+    total decimal(20,2),
+    id_producto int,
+    id_servicio int,
+    nota text
+);
